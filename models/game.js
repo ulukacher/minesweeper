@@ -93,7 +93,9 @@ class Game {
             
         } while (minasInsertadas < this.mines);
 
-        console.log(this.tablero);
+        console.log("Tablero inicializado con minas.");
+        console.log(this.tableroReal);
+
 
     }
 
@@ -121,6 +123,7 @@ class Game {
     }
 
     realizarAccionEnCelda(fila, columna, accion){
+        console.log(`\nRealizar acción ${accion} en: fila ${fila}; Columna ${columna}\n`);
 
         fila = fila-1;
         columna = columna-1;
@@ -150,7 +153,16 @@ class Game {
     }
 
     click(celda){
+
+        if(celda.hasFlag) {              //Para no clickear una celda donde se seteó una bandera
+            return {
+                tablero: this.tableroDeUsuario,
+                minasRestantes: this.minasRestantes              
+            }
+        }          
+
         if(celda.poseeMina){
+            console.log("Game over");
             this.state = STATES_GAME.LOSE;
             return {
                 msg: "Perdiste :( :(",
@@ -183,9 +195,9 @@ class Game {
 
     toggleFlag(celda){       
         
-        if(celda.visible)
-            return;
+        if(celda.visible) return;
 
+        console.log("Toggle flag");
         celda.hasFlag = !celda.hasFlag;
         
         //Si el usuario agrega una bandera, se decrementa la cantidad de minas restantes (desde el punto de vista del usuario)
@@ -197,8 +209,9 @@ class Game {
     }
 
     toggleQuestionMark(celda){
-        if(celda.visible)
-            return;
+        if(celda.visible) return;
+
+        console.log("Toggle question mark");
 
         celda.hasQuestionMark = !celda.hasQuestionMark;      
     }     

@@ -20,24 +20,20 @@ const createGame = (req,res = response) => {
         
         game = new Game(height,width,mines);   
 
-        //TODO: en un esquema de persistencia, se invocaría al service para almacenar la partida en la BD        
-        // createGameDB(game);
-    
-    
-        console.log(game.tableroReal);
-        const resultado = game.tableroDeUsuario;
-    
+        //TODO: en un esquema de persistencia, se invocaría al siguiente service para almacenar la partida en la BD        
+        // createGameDB(game);  
+      
     
         res.status(201).json({
             msg: "Juego creado!",
             width,
             height,
             mines,
-            tableroInicializado: resultado
+            tableroInicializado: game.tableroDeUsuario
         })
     }
     catch(error){
-        console.log("Error",error);
+        console.log("Error:",error);
         res.status(error.statusCode || 500).json({
             error: error.msg || "Error inesperado"
         });
@@ -59,7 +55,7 @@ const playGame = (req,res = response) => {
 
 
     } catch (error) {
-        console.log(error);
+        console.log("Error:", error);
         res.status(error.statusCode || 500).json({
             error: error.msg || "Error inesperado"
         });

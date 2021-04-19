@@ -17,7 +17,7 @@ const validateCreateGameRequest = (height, width, mines)=>{
 
     if (mines < 1) {
       throw {
-        msg: "Deeb haber al menos una mina.",
+        msg: "Debe haber al menos una mina.",
         statusCode: HTTP_STATES.BAD_REQUEST
       }
     }
