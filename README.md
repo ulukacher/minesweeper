@@ -13,11 +13,14 @@ La API consta de dos métodos:
 	- *mines*: cantidad de minas.
 
 
-- **/games/play**: este método POST permite realizar acciones sobre las celdas del tablero creado. Para esto, se debe ingresar los parámetros *fila* y *columna*  indicando las coordenadas la celda en cuestión.
-Además, se debe especificar el parámetro *accion*  en base a las distintas funcionalidades del clásico juego:
+- **/games/play**: este método POST permite realizar acciones sobre las celdas del tablero creado. Para esto, se debe ingresar los parámetros ***fila*** y ***columna***  indicando las coordenadas la celda en cuestión.
+Además, se debe especificar el parámetro ***accion***  en base a las distintas funcionalidades del clásico juego:
 	- "T" para clickear y destapar una celda.
 	- "F" para marcar/desmarcar una celda con una bandera (flag).
 	- "?" para marcar/desmarcar una celda con un signo de interrogación.
+
+**Nota: **las coordenadas del tablero comienzan desde el número 1 (uno).
+
 
 #### Levantar el server de forma local
 
