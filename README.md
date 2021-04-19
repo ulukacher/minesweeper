@@ -19,7 +19,7 @@ Además, se debe especificar el parámetro ***accion***  en base a las distintas
 	- "F" para marcar/desmarcar una celda con una bandera (flag).
 	- "?" para marcar/desmarcar una celda con un signo de interrogación.
 
-**Nota: **las coordenadas del tablero comienzan desde el número 1 (uno).
+**Nota:** Las coordenadas del tablero comienzan desde el número 1 (uno).
 
 
 ### Levantar el server de forma local
