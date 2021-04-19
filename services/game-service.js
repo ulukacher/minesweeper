@@ -1,7 +1,8 @@
 const Cell = require("../db/cell");
 const Game = require("../db/game");
 
-const {HTTP_STATES} = require("../config/constants")
+const {HTTP_STATES} = require("../config/constants");
+const { mapGameDBToGameDomain } = require("../mapper/game-mapper");
 
 
 
@@ -9,15 +10,18 @@ const createGameDB = async (game) => {
 
 
     try {
+
+        //Se persistiría al juego en la BD
+
         const gameDB =  await Game.create({
             height: game.height,
             width: game.width,
             mines: game.mines
         });
     
-    
-    
-        console.log("Se procede a guardar las celdas");
+        
+        //Haríamos un bulk insert para insertar todas las celdas en una única operacion SQL
+        //Hacer un insert por cada celda del tablero implicaría una degradación en la performance   
     
         let tablero = [[]];
         tablero = game.tablero;
@@ -64,6 +68,10 @@ const getGameFromDB = async(id) => {
         }
 
         console.log({gameDB});
+        const game = mapGameDBToGameDomain(gameDB);
+        return game;
+
+
     } catch (error) {
         throw {
             msg: "Error obteniendo juego de la DB",

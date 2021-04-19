@@ -15,8 +15,6 @@ const Game = db.define('Game', {
     tableName: 'games'
 });
 
-Game.associate = ({ Cell }) => {
-  Game.hasMany(Cell, { as: 'cells', foreignKey: 'game_id' });
-};
+
 
 module.exports = Game;

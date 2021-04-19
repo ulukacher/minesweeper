@@ -15,12 +15,13 @@ const createGame = (req,res = response) => {
 
     try {
         const {width, height, mines} = req.body;
+
         validateCreateGameRequest(height, width, mines);   
         
         game = new Game(height,width,mines);   
-        
-        // createGameDB(game);
 
+        //TODO: en un esquema de persistencia, se invocaría al service para almacenar la partida en la BD        
+        // createGameDB(game);
     
     
         console.log(game.tableroReal);
@@ -47,7 +48,6 @@ const createGame = (req,res = response) => {
 
 const playGame = (req,res = response) => {
     try {
-
               
         validatePlayGameRequest(req.body, game);
 
@@ -68,22 +68,24 @@ const playGame = (req,res = response) => {
 }
 
 
-const playGameId = (req,res = response) => {
+const playGameId = async(req,res = response) => {
     try {
         const {id} = req.params;
         console.log({id});
-        
-        getGameFromDB(id);
-
-        validatePlayGameRequest(req.body, game);
 
         const {fila, columna, accion = "T"} = req.body;
 
-        getCellByCoordinates(fila, columna, id);
+        const gameFetched = await getGameFromDB(id);
+        console.log({gameFetched});
 
-        let result = game.realizarAccionEnCelda(fila, columna, accion);
-        console.log(result);
-        res.json(result);
+        const cellFetched = await getCellByCoordinates(fila-1, columna-1, id);
+        console.log({cellFetched});
+
+        //TODO: realizar acciones sobre las celdas y persistirlas
+
+        res.json({
+            msg: "Este sería el endpoint para jugar una partida espeficando un id"
+        });
     } catch (error) {
         console.log(error);
         res.status(error.statusCode || 500).json({

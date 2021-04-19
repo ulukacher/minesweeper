@@ -18,9 +18,7 @@ const Cell = db.define('Cell', {
   tableName: 'cells'
 });
 
-Cell.associate = ({ Game }) => {
-  Cell.belongsTo(Game, { as: 'game', foreignKey: 'game_id' });
-};
+
 
 
 module.exports = Cell;

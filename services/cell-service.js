@@ -2,6 +2,7 @@ const Cell = require("../db/cell");
 const { mapCellDBToCellDomain } = require("../mapper/cell-mapper");
 
 const getCellByCoordinates = async(row, column, game_id) => {
+    
     const cellDB = await Cell.findOne({where: 
         {
             row: row,
@@ -11,7 +12,7 @@ const getCellByCoordinates = async(row, column, game_id) => {
     });
 
     const cell = mapCellDBToCellDomain(cellDB);
-    console.log({cell});
+    return cell;
 
 
 }
