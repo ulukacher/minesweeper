@@ -101,9 +101,10 @@ class Game {
        let celda =  this.tablero[fila][columna];
     
        if (!celda.visible){
+            celda.hasQuestionMark = false;
             celda.visible = true;
 
-            //Si la celda  seleccionada no tiene minas alrededor, destapamos aquellas celdas adyacentes que no poseen minas                
+            //Si la celda seleccionada no tiene minas alrededor, destapamos aquellas celdas adyacentes que no poseen minas                
 
             if (celda.value == 0){  
                 for (let filaPuntero = Math.max(0,fila-1); filaPuntero <= Math.min(this.height-1, fila+1); filaPuntero++) {
@@ -180,7 +181,11 @@ class Game {
         }
     } 
 
-    toggleFlag(celda){        
+    toggleFlag(celda){       
+        
+        if(celda.visible)
+            return;
+
         celda.hasFlag = !celda.hasFlag;
         
         //Si el usuario agrega una bandera, se decrementa la cantidad de minas restantes (desde el punto de vista del usuario)
@@ -192,6 +197,9 @@ class Game {
     }
 
     toggleQuestionMark(celda){
+        if(celda.visible)
+            return;
+
         celda.hasQuestionMark = !celda.hasQuestionMark;      
     }     
 

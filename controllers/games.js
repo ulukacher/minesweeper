@@ -75,11 +75,11 @@ const playGameId = async(req,res = response) => {
 
         const {fila, columna, accion = "T"} = req.body;
 
-        const gameFetched = await getGameFromDB(id);
-        console.log({gameFetched});
+        // const gameFetched = await getGameFromDB(id);
+        // console.log({gameFetched});
 
-        const cellFetched = await getCellByCoordinates(fila-1, columna-1, id);
-        console.log({cellFetched});
+        // const cellFetched = await getCellByCoordinates(fila-1, columna-1, id);
+        // console.log({cellFetched});
 
         //TODO: realizar acciones sobre las celdas y persistirlas
 

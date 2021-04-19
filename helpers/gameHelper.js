@@ -58,14 +58,14 @@ const validatePlayGameRequest =(body, game)=>{
       }
     }
 
-    if (fila > game.height){
+    if (fila < 1 || fila > game.height){
       throw {
         msg: "Por favor, ingrese una fila válida. ",
         statusCode: HTTP_STATES.BAD_REQUEST
       }
     }
 
-    if (columna > game.width){
+    if (columna < 1 || columna > game.width){
       throw {
         msg: "Por favor, ingrese una columna válida. ",
         statusCode: HTTP_STATES.BAD_REQUEST
