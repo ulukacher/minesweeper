@@ -1,6 +1,6 @@
 # Minesweeper Challenge - Uri Lukacher
 
-Aplicación del clásico juego del Buscaminas desarrollada en Node.js
+Aplicación del famoso juego del Buscaminas desarrollada en Node.js
 
 ## Cómo utilizar la aplicación?
 
