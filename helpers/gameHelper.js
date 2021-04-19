@@ -51,6 +51,13 @@ const validatePlayGameRequest =(body, game)=>{
         }
     }
 
+    if (!game.enCurso){
+      throw {
+        msg: "Tu partida ya ha finalizado! Si desea continuar jugando, por favor cree una nueva partida.",
+        statusCode: HTTP_STATES.EXPECTATION_FAILED
+      }
+    }
+
     if (fila > game.height){
       throw {
         msg: "Por favor, ingrese una fila válida. ",

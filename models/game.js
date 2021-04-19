@@ -38,6 +38,10 @@ class Game {
         return count;
     }
 
+    get enCurso(){
+        return this.state == STATES_GAME.PENDING;
+    }
+
 
     inicializarTablero(){
         this.tablero.shift();
@@ -146,6 +150,7 @@ class Game {
 
     click(celda){
         if(celda.poseeMina){
+            this.state = STATES_GAME.LOSE;
             return {
                 msg: "Perdiste :( :(",
                 tablero: this.tableroReal
@@ -158,27 +163,10 @@ class Game {
         }  
     }
 
-    toggleFlag(celda){
-        
-        celda.hasFlag = !celda.hasFlag;
-
-        //Si el usuario agrega una bandera, se decrementa la cantidad de minas restantes (desde el punto de vista del usuario)
-        if(celda.hasFlag)
-            this.minasRestantes--;
-        else
-            this.minasRestantes++;
-        
-
-    }
-
-    toggleQuestionMark(celda){
-        celda.hasQuestionMark = !celda.hasQuestionMark;      
-    }
-    
-
     verificarEstadoJuego() {
 
         if (this.celdasDestapadas == this.celdasNecesariasParaGanar){     
+            this.state = STATES_GAME.WIN;
             return {
                 msg: "GANASTE :) :)!!!!",
                 tablero: this.tableroReal
@@ -190,8 +178,22 @@ class Game {
                 minasRestantes: this.minasRestantes              
             }
         }
-    }  
-    
+    } 
+
+    toggleFlag(celda){        
+        celda.hasFlag = !celda.hasFlag;
+        
+        //Si el usuario agrega una bandera, se decrementa la cantidad de minas restantes (desde el punto de vista del usuario)
+        if(celda.hasFlag)
+            this.minasRestantes--;
+        else
+            this.minasRestantes++;       
+
+    }
+
+    toggleQuestionMark(celda){
+        celda.hasQuestionMark = !celda.hasQuestionMark;      
+    }     
 
 
 }
