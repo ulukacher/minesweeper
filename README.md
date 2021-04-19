@@ -2,7 +2,7 @@
 
 Aplicación del clásico juego del Buscaminas desarrollada en Node.js
 
-### Cómo utilizar la aplicación?
+## Cómo utilizar la aplicación?
 
 En el repositorio encontrarán una colección de [Postman](https://www.postman.com/), con un ejemplo de requests para invocar a los métodos de la API, junto a los environments correspondientes.
 
@@ -22,7 +22,7 @@ Además, se debe especificar el parámetro ***accion***  en base a las distintas
 **Nota: **las coordenadas del tablero comienzan desde el número 1 (uno).
 
 
-#### Levantar el server de forma local
+### Levantar el server de forma local
 
 1. Clonar el proyecto o descargarlo mediante .zip
 2. Instalar [Node.js](https://nodejs.org/es/)
@@ -31,6 +31,6 @@ Además, se debe especificar el parámetro ***accion***  en base a las distintas
 5. En Postman, seleccionar el *environment*"Desarrollo"
 
 
-#### Utilizar la aplicación desplegada en Cloud.
+### Utilizar la aplicación desplegada en Cloud.
 Para esto, en Postman se debe seleccionar el *environment* "Produccion". 
 La aplicación está desplegada en  [https://minesweeper-challenge-uluka.herokuapp.com/](https://minesweeper-challenge-uluka.herokuapp.com/).
