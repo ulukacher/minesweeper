@@ -14,7 +14,7 @@ Este endpoint POST permite crear una nueva partida personalizada de buscaminas, 
 	- *mines:* cantidad de minas.
 
 
-- `/games/play` 
+- `/games/play/` 
 Este endpoint POST permite realizar acciones sobre las celdas del tablero creado. Para esto, se debe ingresar los parámetros ***fila*** y ***columna***  indicando las coordenadas la celda en cuestión.
 Además, se debe especificar el parámetro ***accion***  en base a las distintas funcionalidades del clásico juego:
 	- "T" para clickear y destapar una celda.
