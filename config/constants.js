@@ -15,7 +15,9 @@ const STATES_GAME = {
 }
 
 const HTTP_STATES = {
-    BAD_REQUEST: 400
+    BAD_REQUEST: 400,
+    EXPECTATION_FAILED: 417,
+    INTERNAL_SERVER_ERROR: 500
 }
 
 module.exports = {

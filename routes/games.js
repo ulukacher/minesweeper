@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { doPing, createGame, playGame } = require('../controllers/games');
+const { doPing, createGame, playGame, playGameId } = require('../controllers/games');
 
 const router = Router();
 
@@ -7,7 +7,10 @@ router.get("/ping", doPing);
 
 router.post("/", createGame);
 
-router.post("/play/:id", playGame);
+router.post("/play", playGame);
+
+
+router.post("/play/:id", playGameId);
 
 
 

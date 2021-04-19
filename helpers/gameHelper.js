@@ -34,8 +34,15 @@ const validateCreateGameRequest = (height, width, mines)=>{
 
 const validatePlayGameRequest =(body, game)=>{
 
-
   const {fila, columna, accion = "T"} = body
+
+    if (!game)
+    {
+        throw {
+            msg: "No hay ninguna partida de Buscaminas creada. Por favor, no olvide de crear la partida previamente.",
+            statusCode: HTTP_STATES.EXPECTATION_FAILED
+        }
+    }
 
     if (fila > game.height){
       throw {

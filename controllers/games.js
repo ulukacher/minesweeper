@@ -1,7 +1,8 @@
 const {response, request} = require('express');
 const { validateCreateGameRequest, validatePlayGameRequest } = require('../helpers/gameHelper');
 const Game = require('../models/game');
-const {createGameDB} = require("../services/game-service");
+const { getCellByCoordinates } = require('../services/cell-service');
+const {createGameDB, getGameFromDB} = require("../services/game-service");
 
 let game = undefined;
 
@@ -16,9 +17,10 @@ const createGame = (req,res = response) => {
         const {width, height, mines} = req.body;
         validateCreateGameRequest(height, width, mines);   
         
-        // createGameDB(height, width, mines);
-
         game = new Game(height,width,mines);   
+        
+        // createGameDB(game);
+
     
     
         console.log(game.tableroReal);
@@ -30,7 +32,7 @@ const createGame = (req,res = response) => {
             width,
             height,
             mines,
-            resultado
+            tableroInicializado: resultado
         })
     }
     catch(error){
@@ -45,9 +47,8 @@ const createGame = (req,res = response) => {
 
 const playGame = (req,res = response) => {
     try {
-        const {id} = req.params.id;
-        
 
+              
         validatePlayGameRequest(req.body, game);
 
         const {fila, columna, accion = "T"} = req.body;
@@ -55,8 +56,10 @@ const playGame = (req,res = response) => {
         let result = game.realizarAccionEnCelda(fila, columna, accion);
         console.log(result);
         res.json(result);
+
+
     } catch (error) {
-        
+        console.log(error);
         res.status(error.statusCode || 500).json({
             error: error.msg || "Error inesperado"
         });
@@ -64,8 +67,36 @@ const playGame = (req,res = response) => {
     
 }
 
+
+const playGameId = (req,res = response) => {
+    try {
+        const {id} = req.params;
+        console.log({id});
+        
+        getGameFromDB(id);
+
+        validatePlayGameRequest(req.body, game);
+
+        const {fila, columna, accion = "T"} = req.body;
+
+        getCellByCoordinates(fila, columna, id);
+
+        let result = game.realizarAccionEnCelda(fila, columna, accion);
+        console.log(result);
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(error.statusCode || 500).json({
+            error: error.msg || "Error inesperado"
+        });
+    }
+    
+}
+
+
 module.exports = {
     doPing,
     createGame,
-    playGame
+    playGame,
+    playGameId
 }
