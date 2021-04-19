@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "3166a7d9-34ca-4180-b907-9125de8ff0a2",
+		"name": "minesweeper-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/games/ping",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"games",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create game",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"width\": 5,\r\n    \"height\": 5,\r\n    \"mines\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/games",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "play game",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fila\": 2,\r\n    \"columna\":3,\r\n    \"accion\": \"T\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/games/play",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"games",
+						"play"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
