@@ -7,13 +7,15 @@ Aplicación del clásico juego del Buscaminas desarrollada en Node.js
 En el repositorio encontrarán una colección de [Postman](https://www.postman.com/), con un ejemplo de requests para invocar a los métodos de la API, junto a los environments correspondientes.
 
 La API consta de dos métodos:
-- **/games/:** este método POST permite crear una nueva partida personalizada de buscaminas, especificando los siguientes párametros:
-	- *height*: cantidad de filas que tendrá el tablero.
-	- *width*: cantidad de columnas que tendrá el tablero.
-	- *mines*: cantidad de minas.
+- `/games/`
+Este endpoint POST permite crear una nueva partida personalizada de buscaminas, especificando los siguientes párametros:
+	- *height:* cantidad de filas que tendrá el tablero.
+	- *width:* cantidad de columnas que tendrá el tablero.
+	- *mines:* cantidad de minas.
 
 
-- **/games/play**: este método POST permite realizar acciones sobre las celdas del tablero creado. Para esto, se debe ingresar los parámetros ***fila*** y ***columna***  indicando las coordenadas la celda en cuestión.
+- `/games/play` 
+Este endpoint POST permite realizar acciones sobre las celdas del tablero creado. Para esto, se debe ingresar los parámetros ***fila*** y ***columna***  indicando las coordenadas la celda en cuestión.
 Además, se debe especificar el parámetro ***accion***  en base a las distintas funcionalidades del clásico juego:
 	- "T" para clickear y destapar una celda.
 	- "F" para marcar/desmarcar una celda con una bandera (flag).
