@@ -15,15 +15,22 @@ const validateCreateGameRequest = (height, width, mines)=>{
       
     }
 
-    if (height <= 0 || width <= 0 || mines <= 0 ){
+    if (mines < 1) {
       throw {
-        msg: "Las filas, columnas y la cantidad de minas deben ser mayores a cero.",
+        msg: "Deeb haber al menos una mina.",
+        statusCode: HTTP_STATES.BAD_REQUEST
+      }
+    }
+
+    if (height < 3 || width <= 2){
+      throw {
+        msg: "El tablero deber ser -como mínimo- de 3x3. ",
         statusCode: HTTP_STATES.BAD_REQUEST
       }
        
     }    
 
-    if (mines > height*width){
+    if (mines > height * width){
       throw {
         msg: "La cantidad de minas debe ser menor o igual que (filas*columnas).",
         statusCode: HTTP_STATES.BAD_REQUEST
