@@ -1,4 +1,7 @@
-const { MINE_VALUE } = require("../helpers/gameHelper");
+const { ACTIONS_GAME, MINE_VALUE } = require("../config/constants");
+
+
+
 
 class Cell{
     
@@ -8,12 +11,25 @@ class Cell{
         this.value = 0;
         this.row = row;
         this.column = column;
+        this.hasQuestionMark = false;
+        this.hasFlag = false;
         
     }
 
-    // Si el usuario no destapó la celda, no se le debe mostrar el valor
+    // El contenido de la celda que se le mostrará al usuario
     get userValue(){
-        return this.visible ? this.value.toString() : '#'
+        if(this.hasFlag){
+            return ACTIONS_GAME.FLAG;
+        }
+        else if (this.hasQuestionMark){
+            return ACTIONS_GAME.QUESTION_MARK;
+        }
+        else {
+            return this.visible ? this.value.toString() : '#';
+        }
+
+
+        
     }
 
     get poseeMina(){

@@ -1,4 +1,5 @@
-const { randomValue, MINE_VALUE } = require("../helpers/gameHelper");
+const { MINE_VALUE, ACTIONS_GAME, HTTP_STATES, STATES_GAME } = require("../config/constants");
+const { randomValue } = require("../helpers/gameHelper");
 const Cell = require("./cell");
 
 class Game {
@@ -8,30 +9,23 @@ class Game {
         this.width = width;
         this.height= height;
         this.tablero = [[]];
-       
+        this.minasRestantes= mines;
+        this.state = STATES_GAME.PENDING;
         this.inicializarTablero();
     
     }
 
     get tableroReal(){                  //El tablero con los valores reales
-        return this.tablero.map( fila => {
-            return fila.map(c => c.value);
-        });
+        return this.tablero.map( fila => { return fila.map(c => c.value);   });
     }
 
     
-    get tableroDeUsuario(){             //El tablero que irá visualizando el usuario a lo largo del juego
-
-        return this.tablero.map( fila => {
-            return fila.map(c => c.userValue);
-        });
+    get tableroDeUsuario(){           //El tablero que irá visualizando el usuario a lo largo del juego
+        return this.tablero.map( fila => { return fila.map(c => c.userValue); });
     }
+  
 
-   
-
-    get celdasNecesariasParaGanar(){
-        return this.width * this.height - this.mines;
-    }
+    get celdasNecesariasParaGanar(){ return this.width * this.height - this.mines;   }
 
     get celdasDestapadas(){
         let count = 0;
@@ -95,7 +89,6 @@ class Game {
             
         } while (minasInsertadas < this.mines);
 
-        console.log("Tablero inicializado con minas");
         console.log(this.tablero);
 
     }
@@ -115,22 +108,43 @@ class Game {
                         const celdaAdyacente = this.tablero[filaPuntero][columnaPuntero];                       
                         
                         if (!celdaAdyacente.poseeMina) this.destaparCelda(filaPuntero, columnaPuntero);                      
-                    }
-                    
+                    }                    
                 }
-            }
-
-            
-       }       
-       
+            }            
+       }             
 
     }
 
-    clickearCelda(fila, columna){
+    realizarAccionEnCelda(fila, columna, accion){
+
         fila = fila-1;
         columna = columna-1;
         let celda = this.tablero[fila][columna];
+        switch (accion) {
+            case ACTIONS_GAME.TAP:
+                let result = this.click(celda);
+                return result;
 
+            case ACTIONS_GAME.FLAG:
+                this.toggleFlag(celda);
+                return {
+                    tablero: this.tableroDeUsuario  ,
+                    minasRestantes: this.minasRestantes              
+                }
+                    
+            case ACTIONS_GAME.QUESTION_MARK:
+                this.toggleQuestionMark(celda);
+                return {
+                    tablero: this.tableroDeUsuario  ,
+                    minasRestantes: this.minasRestantes              
+                }           
+        }
+
+        
+        
+    }
+
+    click(celda){
         if(celda.poseeMina){
             return {
                 msg: "Perdiste :( :(",
@@ -138,19 +152,33 @@ class Game {
             };
         }
         else{
-            this.destaparCelda(fila, columna);
+            this.destaparCelda(celda.row, celda.column);
             const result = this.verificarEstadoJuego();
             return result;            
-        }   
+        }  
+    }
+
+    toggleFlag(celda){
+        
+        celda.hasFlag = !celda.hasFlag;
+
+        //Si el usuario agrega una bandera, se decrementa la cantidad de minas restantes (desde el punto de vista del usuario)
+        if(celda.hasFlag)
+            this.minasRestantes--;
+        else
+            this.minasRestantes++;
         
 
     }
 
-    verificarEstadoJuego() {
-        console.log("destapadas:", this.celdasDestapadas);
-        console.log("need to win:",this.celdasNecesariasParaGanar);
+    toggleQuestionMark(celda){
+        celda.hasQuestionMark = !celda.hasQuestionMark;      
+    }
+    
 
-        if (this.celdasDestapadas == this.celdasNecesariasParaGanar){
+    verificarEstadoJuego() {
+
+        if (this.celdasDestapadas == this.celdasNecesariasParaGanar){     
             return {
                 msg: "GANASTE :) :)!!!!",
                 tablero: this.tableroReal
@@ -158,12 +186,12 @@ class Game {
         }
         else{
             return {
-                tablero: this.tableroDeUsuario                
+                tablero: this.tableroDeUsuario  ,
+                minasRestantes: this.minasRestantes              
             }
         }
-
-    }
-   
+    }  
+    
 
 
 }

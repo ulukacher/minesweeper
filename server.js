@@ -1,4 +1,6 @@
 const express = require('express');
+const db = require('./db/connection')
+
 
 class Server {
     
@@ -6,9 +8,10 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.gamesPath = "/games";
+        
+        // this.dbConnection();
 
         this.middlewares();
-
         this.routes();
     }
 
@@ -25,6 +28,21 @@ class Server {
         this.app.listen(this.port, ()=> {
             console.log("Servidor corriendo en port", this.port );
         })
+    }
+
+    async dbConnection() {
+
+        try {
+            
+            await db.authenticate();
+            console.log('Database online');
+
+            // await db.sync({ force: true });
+
+        } catch (error) {
+            throw new Error( error );
+        }
+
     }
 }
 

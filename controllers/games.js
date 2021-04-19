@@ -1,7 +1,7 @@
 const {response, request} = require('express');
-const { validateCreateGameRequest } = require('../helpers/gameHelper');
+const { validateCreateGameRequest, validatePlayGameRequest } = require('../helpers/gameHelper');
 const Game = require('../models/game');
-
+const {createGameDB} = require("../services/game-service");
 
 let game = undefined;
 
@@ -14,7 +14,10 @@ const createGame = (req,res = response) => {
 
     try {
         const {width, height, mines} = req.body;
-        validateCreateGameRequest(height, width, mines);    
+        validateCreateGameRequest(height, width, mines);   
+        
+        // createGameDB(height, width, mines);
+
         game = new Game(height,width,mines);   
     
     
@@ -23,7 +26,7 @@ const createGame = (req,res = response) => {
     
     
         res.status(201).json({
-            msg: "Juego creado",
+            msg: "Juego creado!",
             width,
             height,
             mines,
@@ -31,9 +34,9 @@ const createGame = (req,res = response) => {
         })
     }
     catch(error){
-
-        res.status(error.statusCode).json({
-            error: error.msg
+        console.log("Error",error);
+        res.status(error.statusCode || 500).json({
+            error: error.msg || "Error inesperado"
         });
     }
     
@@ -43,23 +46,23 @@ const createGame = (req,res = response) => {
 const playGame = (req,res = response) => {
     try {
         const {id} = req.params.id;
-        const {fila, columna} = req.body
+        
 
-        let result = game.clickearCelda(fila, columna);
+        validatePlayGameRequest(req.body, game);
+
+        const {fila, columna, accion = "T"} = req.body;
+
+        let result = game.realizarAccionEnCelda(fila, columna, accion);
         console.log(result);
         res.json(result);
     } catch (error) {
         
-        res.status(500).json({
-            error
+        res.status(error.statusCode || 500).json({
+            error: error.msg || "Error inesperado"
         });
     }
     
 }
-
-
-
-
 
 module.exports = {
     doPing,

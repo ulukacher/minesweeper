@@ -1,44 +1,69 @@
-const { BAD_REQUEST_STATUS_CODE } = require("./httpHelper");
+const {HTTP_STATES, ACTIONS_ACCEPTED } = require("../config/constants");
+
 
 const randomValue = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
 
 const validateCreateGameRequest = (height, width, mines)=>{
 
     if (!Number.isInteger(height) || !Number.isInteger(width) || !Number.isInteger(mines)){
       throw {
         msg: "Las filas, columnas y la cantidad de minas deben ser numeros enteros.",
-        statusCode: BAD_REQUEST_STATUS_CODE
-      }
-      
+        statusCode: HTTP_STATES.BAD_REQUEST
+      }      
       
     }
 
     if (height <= 0 || width <= 0 || mines <= 0 ){
       throw {
         msg: "Las filas, columnas y la cantidad de minas deben ser mayores a cero.",
-        statusCode: BAD_REQUEST_STATUS_CODE
+        statusCode: HTTP_STATES.BAD_REQUEST
       }
        
     }    
 
-
     if (mines > height*width){
       throw {
         msg: "La cantidad de minas debe ser menor o igual que (filas*columnas).",
-        statusCode: BAD_REQUEST_STATUS_CODE
+        statusCode: HTTP_STATES.BAD_REQUEST
       }
     }
     
 }
 
-const MINE_VALUE = 9;
+const validatePlayGameRequest =(body, game)=>{
+
+
+  const {fila, columna, accion = "T"} = body
+
+    if (fila > game.height){
+      throw {
+        msg: "Por favor, ingrese una fila válida. ",
+        statusCode: HTTP_STATES.BAD_REQUEST
+      }
+    }
+
+    if (columna > game.width){
+      throw {
+        msg: "Por favor, ingrese una columna válida. ",
+        statusCode: HTTP_STATES.BAD_REQUEST
+      }
+    }   
+
+    if (!ACTIONS_ACCEPTED.includes(accion)){
+      throw {
+        msg: 'Por favor, ingrese una acción valida. T para destapar una celda, F para agregar una bandera, ? para agregar un signo de interrogación.',
+        statusCode: HTTP_STATES.BAD_REQUEST
+      }
+    }
+
+
+}
 
 
 module.exports = {
     randomValue,
-    MINE_VALUE,
-    validateCreateGameRequest
+    validateCreateGameRequest,
+    validatePlayGameRequest
 }

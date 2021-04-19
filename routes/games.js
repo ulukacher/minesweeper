@@ -7,7 +7,7 @@ router.get("/ping", doPing);
 
 router.post("/", createGame);
 
-router.post("/:id", playGame);
+router.post("/play/:id", playGame);
 
 
 
